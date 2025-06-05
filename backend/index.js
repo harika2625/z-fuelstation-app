@@ -8,6 +8,10 @@ const UserModel = require("./models/user");
 const StationModel = require("./models/station");
 const { stat } = require("fs");
 
+//new
+const mapRouter = require("./map-router/map-router.js");
+app.use("/map", mapRouter);
+
 mongoose.connect("mongodb://localhost:27017/Zusers");
 
 app.listen(3000, () => {
@@ -68,3 +72,4 @@ app.get("/stations", async (req, res) => {
       .status(500)
       .send({ error: "An error occurred while fetching stations." });
   }
+});
