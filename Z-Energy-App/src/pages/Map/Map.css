@@ -1,0 +1,164 @@
+/* Map Page Styles */
+.map-page {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+}
+
+/* Map Container */
+.map-container {
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+/* Loading Spinner */
+.loading-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 8px;
+  z-index: 10;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Error Message */
+.error-message {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ff5252;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  z-index: 10;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  max-width: 80%;
+  text-align: center;
+}
+
+/* Search Container */
+.search-container {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  width: 60%;
+  max-width: 500px;
+}
+
+/* Search Input */
+.station-search {
+  width: 100%;
+  padding: 12px 20px;
+  border: 1px solid #ddd;
+  border-radius: 50px;
+  font-size: 16px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  outline: none;
+}
+
+.station-search:focus {
+  border-color: #f00; /* Z Energy red */
+  box-shadow: 0 2px 10px rgba(255, 0, 0, 0.15);
+}
+
+/* Station Details Panel */
+.station-details-panel {
+  position: absolute;
+  bottom: 30px;
+  left: 30px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
+  padding: 20px;
+  width: 300px;
+  z-index: 5;
+}
+
+.station-details-panel h3 {
+  margin-top: 0;
+  color: #f00; /* Z Energy red */
+  font-size: 18px;
+}
+
+.station-details-panel p {
+  margin: 8px 0;
+  color: #333;
+}
+
+/* Fuel Info */
+.fuel-info {
+  display: flex;
+  justify-content: space-between;
+  margin: 15px 0;
+  padding: 8px;
+  background-color: #f8f8f8;
+  border-radius: 4px;
+}
+
+.fuel-type {
+  font-weight: bold;
+  color: #555;
+}
+
+.fuel-price {
+  font-weight: bold;
+  color: #f00; /* Z Energy red */
+}
+
+/* Buttons */
+.directions-btn {
+  background-color: #f00; /* Z Energy red */
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  width: 100%;
+  cursor: pointer;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.directions-btn:hover {
+  background-color: #d00;
+}
+
+.close-btn {
+  background-color: transparent;
+  border: 1px solid #ccc;
+  color: #555;
+  padding: 8px 15px;
+  border-radius: 4px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  background-color: #f8f8f8;
+}
+
+/* Custom Marker Styles */
+/* These will be applied when you add custom markers */
+.station-marker {
+  background-color: #f00;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* You can add hover states and animations for markers */
+.station-marker:hover {
+  transform: scale(1.1);
+}
