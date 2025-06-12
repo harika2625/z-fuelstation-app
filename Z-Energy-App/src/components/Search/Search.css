@@ -1,0 +1,119 @@
+/* Search Component Styles */
+.search-component {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* Search Input Container */
+.search-input-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+/* Search Input */
+.search-input {
+  flex: 1;
+  padding: 12px 20px;
+  border: 1px solid #ddd;
+  border-radius: 50px 0 0 50px;
+  font-size: 16px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  outline: none;
+}
+
+.search-input:focus {
+  border-color: #f00; /* Z Energy red */
+  box-shadow: 0 2px 10px rgba(255, 0, 0, 0.15);
+}
+
+/* Search Button */
+.search-button {
+  background-color: #f00; /* Z Energy red */
+  color: white;
+  border: none;
+  border-radius: 0 50px 50px 0;
+  padding: 12px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.search-button:hover {
+  background-color: #d00;
+}
+
+/* Search Suggestions Dropdown */
+.search-suggestions {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  right: 0;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  z-index: 10;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+/* Suggestion Items */
+.suggestion-item {
+  padding: 12px 20px;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.2s ease;
+}
+
+.suggestion-item:hover {
+  background-color: #f9f9f9;
+}
+
+.suggestion-item:last-child {
+  border-bottom: none;
+}
+
+.suggestion-item.loading {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+}
+
+/* Suggestion Item Content */
+.suggestion-name {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 3px;
+}
+
+.suggestion-address {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 3px;
+}
+
+.suggestion-fuel {
+  font-size: 13px;
+  color: #f00; /* Z Energy red */
+  font-weight: bold;
+}
+
+/* Responsive Styles */
+@media (max-width: 600px) {
+  .search-component {
+    width: 90%;
+  }
+  
+  .search-input {
+    font-size: 14px;
+    padding: 10px 15px;
+  }
+  
+  .search-button {
+    font-size: 14px;
+    padding: 10px 15px;
+  }
+}

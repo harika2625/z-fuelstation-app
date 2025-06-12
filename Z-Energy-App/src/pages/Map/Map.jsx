@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { APIProvider, Map as GoogleMap, Marker } from '@vis.gl/react-google-maps';
+import Search from '../../components/Search/Search';
 import './Map.css';
 
 /**
@@ -21,22 +22,27 @@ const Map = () => {
   // Default center on Wellington, New Zealand
   const defaultCenter = { lat: -41.2865, lng: 174.7762 };
   
-  /**
-   * Custom map styling to match Z Energy branding
-   * - Removes default POIs for cleaner look
-   * - Customizes road colors
-   */
+  /* ============================================================
+   * Map styling to remove default POIs and map markers
+   * ============================================================ */
   const mapStyles = [
     {
-      // Remove points of interest for cleaner map
+      // Remove all points of interest
       featureType: 'poi',
+      elementType: 'all',
       stylers: [{ visibility: 'off' }]
     },
     {
-      // Customize road appearance
-      featureType: 'road',
-      elementType: 'geometry',
-      stylers: [{ color: '#f5f5f5' }]
+      // Remove all business POIs
+      featureType: 'poi.business',
+      elementType: 'all',
+      stylers: [{ visibility: 'off' }]
+    },
+    {
+      // Remove transit stations
+      featureType: 'transit',
+      elementType: 'all',
+      stylers: [{ visibility: 'off' }]
     }
   ];
 
@@ -56,12 +62,10 @@ const Map = () => {
       
       const data = await response.json();
       
-      // Transform station data to include coordinates
-      // Note: Your station model will need latitude and longitude fields
+      // Station model will need latitude and longitude fields
       const stationsWithCoordinates = data.response.map(station => ({
         ...station,
-        // These properties need to exist in your station model
-        // You may need to add them to your MongoDB schema
+        // Lat/Long such as these:
         position: {
           lat: parseFloat(station.latitude || -41.2865),
           lng: parseFloat(station.longitude || 174.7762)
@@ -105,7 +109,7 @@ const Map = () => {
     // Log the current map center position
     console.log('Map center changed to:', ev.center);
     
-    // Future enhancement: Load stations based on current map bounds
+    // Future?: Load stations based on current map bounds
     // const bounds = mapRef.current?.getBounds();
     // if (bounds) fetchStationsInBounds(bounds);
   }, []);
@@ -151,12 +155,11 @@ const Map = () => {
         
         {/* Map container */}
         <div className="map-container">
-          {/* Search bar - You'll need to implement this component */}
+          {/* Search component */}
           <div className="search-container">
-            <input 
-              type="text" 
-              placeholder="Search for Z stations" 
-              className="station-search"
+            <Search 
+              stations={stations} 
+              onStationSelect={handleStationClick}
             />
           </div>
           
