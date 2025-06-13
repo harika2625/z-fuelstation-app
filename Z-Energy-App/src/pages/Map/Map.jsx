@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { APIProvider, Map as GoogleMap, Marker } from '@vis.gl/react-google-maps';
 import Search from '../../components/Search/Search';
+// Import custom marker icons
+import zStationIcon from '../../assets/z-station.png';
+import selectedStationIcon from '../../assets/selected-z-station.png';
+import recentreIcon from '../../assets/recentre.png';
 import './Map.css';
 
 /**
@@ -21,6 +25,20 @@ const Map = () => {
 
   // Default center on Wellington, New Zealand
   const defaultCenter = { lat: -41.2865, lng: 174.7762 };
+
+  // Custom marker icons for Z stations
+  const markerIcons = {
+    default: {
+      url: zStationIcon,
+      scaledSize: { width: 40, height: 40 },
+      anchor: { x: 20, y: 40 }
+    },
+    selected: {
+      url: selectedStationIcon,
+      scaledSize: { width: 50, height: 50 },
+      anchor: { x: 25, y: 50 }
+    }
+  };
   
   /* ============================================================
    * Map styling to remove default POIs and map markers
@@ -129,10 +147,20 @@ const Map = () => {
   }, []);
 
   /**
-   * Clear selected station when clicking elsewhere on map
+   * Clear selection when clicking the map background
    */
   const handleMapClick = useCallback(() => {
     setSelectedStation(null);
+  }, []);
+
+  /**
+   * Recenter map to default location (Wellington)
+   */
+  const handleRecenterMap = useCallback(() => {
+    if (mapRef.current) {
+      mapRef.current.panTo(defaultCenter);
+      mapRef.current.setZoom(13);
+    }
   }, []);
 
   // Fetch stations on component mount
@@ -163,6 +191,15 @@ const Map = () => {
             />
           </div>
           
+          {/* Recenter map button */}
+          <button 
+            className="recenter-button" 
+            onClick={handleRecenterMap}
+            title="Recenter map to Wellington"
+          >
+            <img src={recentreIcon} alt="Recenter" width="20" height="20" />
+          </button>
+          
           {/* Main Google Map */}
           <GoogleMap
             ref={mapRef}
@@ -187,7 +224,9 @@ const Map = () => {
                 position={station.position}
                 onClick={() => handleStationClick(station)}
                 title={station.name}
-                // You can customize the marker appearance with these props
+                icon={selectedStation && selectedStation._id === station._id
+                  ? markerIcons.selected
+                  : markerIcons.default}
                 // icon={customMarkerIcon}
               />
             ))}
