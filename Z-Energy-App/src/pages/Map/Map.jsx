@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { APIProvider, Map as GoogleMap, Marker } from '@vis.gl/react-google-maps';
 import Search from '../../components/Search/Search';
 // Import custom marker icons
@@ -24,7 +24,7 @@ const Map = () => {
   const mapRef = useRef(null);
 
   // Default center on Wellington, New Zealand
-  const defaultCenter = { lat: -41.2865, lng: 174.7762 };
+  const defaultCenter = useMemo(() => ({ lat: -41.2865, lng: 174.7762 }), []);
 
   // Custom marker icons for Z stations
   const markerIcons = {
@@ -161,7 +161,7 @@ const Map = () => {
       mapRef.current.panTo(defaultCenter);
       mapRef.current.setZoom(13);
     }
-  }, []);
+  }, [defaultCenter]);
 
   // Fetch stations on component mount
   useEffect(() => {
