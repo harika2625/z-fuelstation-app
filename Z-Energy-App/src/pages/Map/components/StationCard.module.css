@@ -1,0 +1,144 @@
+.container {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  z-index: 20;
+  width: 100%;
+  background-image: linear-gradient(to right, #f36f21, #ffdd02);
+  border-radius: 8px;
+  border: solid 5px #1e196b;
+  overflow-y: auto;
+  padding-top: 16px;
+  height: 50%;
+  opacity: 1;
+  transform-origin: bottom;
+  transition: all 1s ease-in;
+}
+
+.hidden {
+  opacity: 0;
+}
+
+.stationCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.topDiv {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+}
+
+.googlePing:hover {
+  cursor: pointer;
+}
+
+.headerDiv {
+  width: 100%;
+}
+
+.header {
+  font-size: 24px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.address {
+  font-size: 16px;
+  color: #fff;
+}
+
+.timeTable {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 85%;
+  margin-top: 16px;
+}
+
+.timeTableDay li {
+  list-style: none;
+  margin-right: 16px;
+  font-size: 16px;
+  color: #fff;
+}
+
+.timeTableHours li {
+  list-style: none;
+  margin-right: 16px;
+  font-size: 16px;
+  color: #fff;
+}
+
+.services {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 80%;
+  margin-top: 16px;
+  gap: 5px;
+}
+
+.services div {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.priceComparisonDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  margin-top: 16px;
+  background-color: #ececf3;
+  border-radius: 8px;
+  gap: 20px;
+}
+
+.cardText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 16px;
+  color: #000;
+  font-weight: bold;
+}
+
+.cardText p {
+  color: #000;
+}
+
+.contactDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 80%;
+  margin-top: 16px;
+}
+
+.phoneContact {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.linkCards {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  margin-top: 16px;
+  background-color: #ececf3;
+  border-radius: 8px;
+  gap: 20px;
+}

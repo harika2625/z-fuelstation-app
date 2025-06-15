@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./PriceComparison.module.css";
 import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import WebHeader from "../../common/WebHeader";
 import WebFooter from "../../common/WebFooter";
 
@@ -51,48 +52,50 @@ export default function PriceComparison() {
     <div className={styles.pageContainer}>
       <WebHeader />
       <div className={styles.header}>
-        <button className={styles.homeBtn}>
-          <span>
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M5.111 17.5002C4.12933 17.5002 3.3335 16.6836 3.3335 15.6752V8.34023C3.3335 7.78606 3.57933 7.26106 4.00016 6.91523L8.88933 2.90023C9.20171 2.64155 9.59458 2.5 10.0002 2.5C10.4057 2.5 10.7986 2.64155 11.111 2.90023L15.9993 6.91523C16.421 7.26106 16.6668 7.78606 16.6668 8.34023V15.6752C16.6668 16.6836 15.871 17.5002 14.8893 17.5002H5.111Z"
-                fill="url(#paint0_linear_1_1127)"
-                stroke="white"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M7.91699 17.5V12.9167C7.91699 12.4746 8.09259 12.0507 8.40515 11.7382C8.71771 11.4256 9.14163 11.25 9.58366 11.25H10.417C10.859 11.25 11.2829 11.4256 11.5955 11.7382C11.9081 12.0507 12.0837 12.4746 12.0837 12.9167V17.5"
-                stroke="white"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <defs>
-                <linearGradient
-                  id="paint0_linear_1_1127"
-                  x1="20.1483"
-                  y1="10.0677"
-                  x2="3.3335"
-                  y2="10.0677"
-                  gradientUnits="userSpaceOnUse"
-                >
-                  <stop
-                    offset="0.317457"
-                    stopColor="#3129AB"
-                    stopOpacity="0.782912"
-                  />
-                  <stop offset="0.897669" stopColor="#1E196B" />
-                </linearGradient>
-              </defs>
-            </svg>
-          </span>
-        </button>
+        <Link to="/Home">
+          <button className={styles.homeBtn}>
+            <span>
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M5.111 17.5002C4.12933 17.5002 3.3335 16.6836 3.3335 15.6752V8.34023C3.3335 7.78606 3.57933 7.26106 4.00016 6.91523L8.88933 2.90023C9.20171 2.64155 9.59458 2.5 10.0002 2.5C10.4057 2.5 10.7986 2.64155 11.111 2.90023L15.9993 6.91523C16.421 7.26106 16.6668 7.78606 16.6668 8.34023V15.6752C16.6668 16.6836 15.871 17.5002 14.8893 17.5002H5.111Z"
+                  fill="url(#paint0_linear_1_1127)"
+                  stroke="white"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M7.91699 17.5V12.9167C7.91699 12.4746 8.09259 12.0507 8.40515 11.7382C8.71771 11.4256 9.14163 11.25 9.58366 11.25H10.417C10.859 11.25 11.2829 11.4256 11.5955 11.7382C11.9081 12.0507 12.0837 12.4746 12.0837 12.9167V17.5"
+                  stroke="white"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <defs>
+                  <linearGradient
+                    id="paint0_linear_1_1127"
+                    x1="20.1483"
+                    y1="10.0677"
+                    x2="3.3335"
+                    y2="10.0677"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop
+                      offset="0.317457"
+                      stopColor="#3129AB"
+                      stopOpacity="0.782912"
+                    />
+                    <stop offset="0.897669" stopColor="#1E196B" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </span>
+          </button>
+        </Link>
         <h2>Price Comparison</h2>
       </div>
 

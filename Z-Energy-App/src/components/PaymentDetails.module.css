@@ -1,0 +1,149 @@
+body {
+  background-color: rgb(230, 230, 225);
+}
+
+.signUpContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #ffffff;
+  width: 320px;
+  height: 568px;
+  margin: 0 auto;
+  overflow: hidden;
+  margin-top: 3cqh;
+  font-family: "Roboto";
+}
+
+.signUpContainer a {
+  text-decoration: none;
+}
+.title {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  box-shadow: 0 4px 6px -4px #fdeadf;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0;
+}
+.statusIcons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  padding: 5px 10px;
+  top: 5px;
+}
+.statusIcons p {
+  color: black;
+  margin: 0;
+  font-weight: bold;
+  margin-right: auto;
+}
+
+.statusIcons img {
+  width: 16px;
+  height: 16px;
+  gap: 5px;
+  margin-right: 5px;
+  margin-left: 8px;
+}
+.formContainer {
+  margin-top: 20px;
+}
+.textLine {
+  color: #868484;
+  font-size: 13px;
+  margin-top: 30px;
+}
+.inputContainer {
+  padding: 10px;
+  margin-left: -60px;
+  margin-top: 2px;
+  width: 140%;
+}
+.cardNumber {
+  width: 100%;
+  border-radius: 10px;
+  border: none;
+  padding: 10px;
+  box-shadow: 0px 0px 10px #fdeadf;
+}
+.cardTypeIcon {
+  position: absolute;
+  right: 10px;
+  width: 45px;
+  height: 15px;
+  pointer-events: none;
+}
+.cardInputContainer .cvvIcon {
+  position: absolute;
+  right: 10px;
+  width: 30px;
+  height: 20px;
+  pointer-events: none;
+}
+.cardInputContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 135%;
+}
+.inputContainer strong {
+  margin-left: -15px;
+  color: #1e196b;
+}
+.inputContainer input {
+  border: none;
+  padding: 12px;
+  box-shadow: 0px 4px 10px -4px#fdeadf;
+  width: 135%;
+}
+.saveButton {
+  background: linear-gradient(
+    270deg,
+    rgba(49, 41, 171, 0.782912) -14.14%,
+    #1e196b 82.89%
+  );
+  color: white;
+  padding: 5px;
+  width: 70%;
+  border-radius: 15px;
+  cursor: pointer;
+  border: none;
+}
+.saveLaterButton {
+  background: linear-gradient(
+    270deg,
+    rgba(49, 41, 171, 0.782912) -14.14%,
+    #1e196b 82.89%
+  );
+  color: white;
+  padding: 5px;
+  width: 100%;
+  border-radius: 15px;
+  cursor: pointer;
+  border: none;
+}
+.saveButtonContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  gap: 20px;
+  width: 100%;
+}
+p {
+  margin-top: 15px;
+}
+.login {
+  background: linear-gradient(to left, #f76b1c, #ffcc00);
+  border-radius: 15px;
+  width: 30%;
+  padding: 5px;
+  text-align: center;
+  color: #1e196b;
+  margin-top: 10px;
+}

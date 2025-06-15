@@ -1,11 +1,14 @@
 const express = require("express");
 const cors = require("cors");
+const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 const app = express();
 app.use(express.json());
 app.use(cors());
 const UserModel = require("./models/user");
+const PaymentDetailsModel = require("./models/paymentDetails");
 const StationModel = require("./models/station");
+const StationDataModel = require("./models/stationData");
 const { stat } = require("fs");
 
 //new
@@ -22,24 +25,36 @@ app.post("/register", (req, res) => {
     .then((users) => res.json(users))
     .catch((err) => res.json(err));
 });
-
+app.post("/PaymentDetails", (req, res) => {
+  PaymentDetailsModel.create(req.body)
+    .then((paymentDetails) => res.json(paymentDetails))
+    .catch((err) => res.json(err));
+});
 app.post("/login", (req, res) => {
   const { email, password } = req.body;
-  UserModel.findOne({ email, password })
+
+  UserModel.findOne({ email })
     .then((user) => {
-      if (user) {
-        if (user.password === password) {
-          res.status(200).json("sucessfully logged in");
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      // Compare entered password with hashed password
+      bcrypt.compare(password, user.password).then((isMatch) => {
+        if (isMatch) {
+          res.status(200).json("successfully logged in");
         } else {
           res.status(401).json({ message: "Invalid credentials" });
         }
-      } else {
-        res.status(404).json({ message: "User not found" });
-      }
+      });
     })
+    .catch((err) =>
+      res.status(500).json({ message: "Server error", error: err })
+    );
+});
 
-    .catch((err) => res.json(err));
-
+app.get("/home", (req, res) => {
+  res.status(200).json({ message: "Welcome to the Home Page!" });
 });
 
 app.get("/stations", async (req, res) => {
@@ -73,3 +88,208 @@ app.get("/stations", async (req, res) => {
       .send({ error: "An error occurred while fetching stations." });
   }
 });
+<<<<<<< HEAD
+=======
+
+app.get("/stationdata/:name", async (req, res) => {
+  try {
+    if (
+      req.params.name === undefined ||
+      req.params.name === null ||
+      req.params.name === ""
+    ) {
+      return res.status(400).json({ message: "Station name is required" });
+    }
+    const stationName = req.params.name;
+    const stationData = await StationDataModel.findOne({ name: stationName });
+    if (!stationData) {
+      return res.status(404).json({ message: "Station data not found" });
+    }
+    res.status(200).json(stationData);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+app.post("/nearestcarwash", async (req, res) => {
+  try {
+    const lat = req.body.lat;
+    const lng = req.body.lng;
+
+    let nearest;
+    let totalDistance = 100000000000;
+
+    const stations = await StationDataModel.find();
+    stations.forEach((station) => {
+      if (station.services.includes("Z20 Carwash") === false) {
+        return;
+      }
+      const distance = () => {
+        latDistance = Math.abs(lat - station.location.lat);
+        lngDistance = Math.abs(lng - station.location.lng);
+        return latDistance + lngDistance;
+      };
+
+      const thisDistance = distance();
+      if (thisDistance < totalDistance) {
+        totalDistance = thisDistance;
+        nearest = station;
+      }
+    });
+
+    console.log(nearest);
+    res
+      .status(200)
+      .json({ lat: nearest.location.lat, lng: nearest.location.lng });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+app.post("/nearestcarwash", async (req, res) => {
+  try {
+    const lat = req.body.lat;
+    const lng = req.body.lng;
+
+    let nearest;
+    let totalDistance = 100000000000;
+
+    const stations = await StationDataModel.find();
+    stations.forEach((station) => {
+      if (station.services.includes("Z20 Carwash") === false) {
+        return;
+      }
+      const distance = () => {
+        latDistance = Math.abs(lat - station.location.lat);
+        lngDistance = Math.abs(lng - station.location.lng);
+        return latDistance + lngDistance;
+      };
+
+      const thisDistance = distance();
+      if (thisDistance < totalDistance) {
+        totalDistance = thisDistance;
+        nearest = station;
+      }
+    });
+
+    console.log(nearest);
+    res
+      .status(200)
+      .json({ lat: nearest.location.lat, lng: nearest.location.lng });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+app.post("/nearestev", async (req, res) => {
+  try {
+    const lat = req.body.lat;
+    const lng = req.body.lng;
+
+    let nearest;
+    let totalDistance = 100000000000;
+
+    const stations = await StationDataModel.find();
+    stations.forEach((station) => {
+      if (station.services.includes("EV Charging") === false) {
+        return;
+      }
+      const distance = () => {
+        latDistance = Math.abs(lat - station.location.lat);
+        lngDistance = Math.abs(lng - station.location.lng);
+        return latDistance + lngDistance;
+      };
+
+      const thisDistance = distance();
+      if (thisDistance < totalDistance) {
+        totalDistance = thisDistance;
+        nearest = station;
+      }
+    });
+
+    console.log(nearest);
+    res
+      .status(200)
+      .json({ lat: nearest.location.lat, lng: nearest.location.lng });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+app.post("/nearestbathroom", async (req, res) => {
+  try {
+    const lat = req.body.lat;
+    const lng = req.body.lng;
+
+    let nearest;
+    let totalDistance = 100000000000;
+
+    const stations = await StationDataModel.find();
+    stations.forEach((station) => {
+      if (station.services.includes("Bathroom") === false) {
+        return;
+      }
+      const distance = () => {
+        latDistance = Math.abs(lat - station.location.lat);
+        lngDistance = Math.abs(lng - station.location.lng);
+        return latDistance + lngDistance;
+      };
+
+      const thisDistance = distance();
+      if (thisDistance < totalDistance) {
+        totalDistance = thisDistance;
+        nearest = station;
+      }
+    });
+
+    console.log(nearest);
+    res
+      .status(200)
+      .json({ lat: nearest.location.lat, lng: nearest.location.lng });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+app.post("/nearestcoffee", async (req, res) => {
+  try {
+    const lat = req.body.lat;
+    const lng = req.body.lng;
+
+    let nearest;
+    let totalDistance = 100000000000;
+
+    const stations = await StationDataModel.find();
+    stations.forEach((station) => {
+      if (station.services.includes("Z Express") === false) {
+        return;
+      }
+      const distance = () => {
+        latDistance = Math.abs(lat - station.location.lat);
+        lngDistance = Math.abs(lng - station.location.lng);
+        return latDistance + lngDistance;
+      };
+
+      const thisDistance = distance();
+      if (thisDistance < totalDistance) {
+        totalDistance = thisDistance;
+        nearest = station;
+      }
+    });
+
+    console.log(nearest);
+    res
+      .status(200)
+      .json({ lat: nearest.location.lat, lng: nearest.location.lng });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+>>>>>>> main

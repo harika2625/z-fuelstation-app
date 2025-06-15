@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic&subset=latin,latin-ext");
+
 .homeContainer {
   display: flex;
   flex-direction: column;
@@ -6,45 +8,73 @@
   width: 320px;
   height: 568px;
   margin: 0 auto;
-  border: #1e196b 1px solid;
+  margin-top: 30px;
 }
-.homeContainer img {
-  width: 100%;
-}
+
 .greetingContainer {
   background-image: linear-gradient(to right, #f36f21, #ffdd02);
-  height: 45%;
+  height: 40%;
   width: 100%;
   color: white;
   justify-content: center;
   text-align: left;
-
   border-bottom-left-radius: 50% 120px;
   border-bottom-right-radius: 50% 120px;
 }
-.statusBar {
+
+.greetingContainer.statusIcons {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 0 16px;
-  height: 20%;
+  justify-content: flex-end;
+  width: 100%;
+  padding: 5px 10px;
+  position: absolute;
+  top: 5px;
 }
-.statusBar h3 {
-  color: black;
+.greeting h2 {
+  font-family: Roboto;
+  font-size: 25px;
+  margin-top: -20px;
+  padding: 0px;
+  color: white;
 }
-.statusBar .statusIcons {
-  color: black;
-  gap: 10px;
+.statusIcons {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  flex-direction: row;
+  justify-content: flex-end;
+  font-family: roboto;
 }
-.statusBar img {
-  width: 25%;
+.statusIcons p {
+  color: black;
+  margin-right: 180px;
+  margin-bottom: 15px;
+
+  font-weight: bold;
+}
+.greetingText {
+  display: flex;
+  gap: 5px;
+}
+.greetingText img {
+  width: 20px;
+  height: 20px;
+  margin-top: 10px;
+}
+.statusIcons img {
+  width: 16px;
+  height: 16px;
+  gap: 5px;
+  margin-right: 5px;
+  margin-left: 8px;
 }
 .greeting {
   margin-left: 15px;
+  margin-top: 30px;
+  font-family: Roboto;
+  font-size: medium;
+}
+.greeting p {
+  font-size: small;
 }
 .greetingContainer button {
   background: #1e196b;
@@ -53,12 +83,15 @@
   padding: 8px;
   border-radius: 15px;
   cursor: pointer;
-  width: 50%;
+  width: 35%;
+  margin-top: 15px;
 }
 .fuelFoodContainer {
   display: flex;
   gap: 16px;
   padding: 20px;
+  margin-top: 10px;
+  font-family: Roboto;
 }
 .leftContainer {
   flex: 1;
@@ -70,7 +103,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 180px; /* taller box */
+  height: 220px; /* taller box */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   gap: 10px;
 }
@@ -86,7 +119,8 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 25px;
+  margin-top: 5px;
 }
 .orderFoodContainer,
 .nearMeContainer {
@@ -98,14 +132,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 60px; /* shorter stacked boxes */
+  height: 90px; /* shorter stacked boxes */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 130px;
+}
+.nearMeContainer img {
+  width: 20%;
+  height: auto;
 }
 .navBarContainer {
   display: flex;
   align-items: center;
   gap: 60px;
-  padding: 20px;
+  padding: 5px;
   width: 80%;
   cursor: pointer;
+  margin-top: 30px;
 }

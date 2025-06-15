@@ -1,58 +1,53 @@
 import React from "react";
 import styles from "./Home.module.css";
-import NavBar from "../common/NavBar";
+import Clock from "../common/Clock";
 
 function Home() {
   return (
     <div className={styles.homeContainer}>
       <div className={styles.greetingContainer}>
-        <div className={styles.statusBar}>
-          <h3>9:41</h3>
-          <div className={styles.statusIcons}>
-            <img src="./public/Cellular Connection.png"></img>
-            <img src="./public/Property 1=icon, Property 2=wifi.png"></img>
-            <img src="./public/Battery.png"></img>
-          </div>
+        <div className={styles.statusIcons}>
+          <Clock />
+          <img src="/Cellular Connection.png" alt="Network Connection"></img>
+          <img src="/Property 1=icon, Property 2=wifi.png" alt="Wifi"></img>
+          <img src="/Battery.png" alt="Battery"></img>
         </div>
         <div className={styles.greeting}>
           <h2>Kia Ora Alex,</h2>
-          <div>
-            <h4>Sharetank</h4>
-            <p>
-              Maximize Your Fuel,
-              <br />
-              Amplify Your Sharing
-            </p>
+          <div className={styles.greetingText}>
+            <img src="/Property 1=icon, Property 2=ev1.png" alt="Wifi"></img>
+            <p>Sharetank</p>
           </div>
+          <p>
+            Maximize Your Fuel,
+            <br />
+            Amplify Your Sharing
+          </p>
           <button>View my tank</button>
         </div>
       </div>
       <div className={styles.fuelFoodContainer}>
         <div className={styles.leftContainer}>
-          <img src="./public/Property 1=icon, Property 2=graph.png"></img>
+          <img src="/Property 1=icon, Property 2=graph.png"></img>
           <p>Fuel Price Comparison</p>
         </div>
         <div className={styles.rightContainer}>
           <div className={styles.orderFoodContainer}>
             Order Food
-            <img src="./public/Property 1=icon, Property 2=pie.png"></img>
+            <img src="/Property 1=icon, Property 2=pie.png"></img>
           </div>
           <div className={styles.nearMeContainer}>
             Z<br />
             Near me
-            <img src="./public/Property 1=icon, Property 2=find Z.png"></img>
+            <img src="/Property 1=icon, Property 2=find Z.png"></img>
           </div>
         </div>
       </div>
       <div className={styles.navBarContainer}>
-        {/* <img
-          src="./public/Navigation bar -  Footer.png"
-          alt="navigationBar"
-        ></img> */}
-        <img src="./public/Property 1=icon, Property 2=HOME.png"></img>
-        <img src="./public/Property 1=icon, Property 2=qr.png"></img>
-        <img src="./public/Property 1=icon, Property 2=sharetank.png"></img>
-        <img src="./public/Property 1=icon, Property 2=hamburger menu.png"></img>
+        <img src="public/Property 1=icon, Property 2=HOME.png"></img>
+        <img src="/Property 1=icon, Property 2=qr.png"></img>
+        <img src="/Property 1=icon, Property 2=sharetank.png"></img>
+        <img src="/Property 1=icon, Property 2=hamburger menu.png"></img>
       </div>
     </div>
   );

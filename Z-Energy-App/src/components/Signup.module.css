@@ -1,3 +1,7 @@
+body {
+  background-color: rgb(230, 230, 225);
+}
+
 .signUpContainer {
   display: flex;
   flex-direction: column;
@@ -6,21 +10,25 @@
   width: 320px;
   height: 568px;
   margin: 0 auto;
-  border: #1e196b 1px solid;
   overflow: hidden;
+  margin-top: 3cqh;
+  font-family: "Roboto";
 }
 
 .blueContainer {
   background: #1e196b;
-  height: 100px;
+  height: 150px;
   width: 320px;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-  padding: 2rem 1rem;
-  gap: 40px;
-  /* overflow: hidden; */
+  overflow: hidden;
+}
+.Zlogo img {
+  width: 100%;
+  height: 10vh;
+  object-fit: contain;
 }
 .yellowLine {
   width: 100%;
@@ -30,12 +38,9 @@
 h3 {
   padding: 0px;
   color: #1e196b;
-  margin-bottom: 0px;
+  margin-top: 10px;
 }
-/* .blueContainer img {
-  width: 76px;
-  height: 76px;
-} */
+
 .signUpContainer a {
   text-decoration: none;
 }
@@ -45,28 +50,33 @@ h3 {
 .login:active {
   text-decoration: none;
 }
-.statusBar {
-  flex-direction: row;
+
+.statusIcons {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  /* padding: 16px; */
-  height: 15%;
-  gap: 150px;
-  margin-bottom: 140px;
+  justify-content: flex-end;
+  width: 100%;
+  padding: 5px 10px;
+  position: absolute;
+  top: 5px;
 }
-h4 {
+
+.statusIcons p {
   color: white;
-  margin-left: 10px;
+  margin: 0;
+  margin-right: auto;
+  font-weight: bold;
 }
+
 .statusIcons img {
-  width: 12%;
-  height: 10%;
-  padding: 10px;
+  width: 16px;
+  height: 16px;
+  margin-left: 8px;
 }
 .inputContainer {
   padding: 10px;
   margin-left: -50px;
+  margin-top: 2px;
 }
 .inputContainer strong {
   margin-left: -15px;
@@ -76,7 +86,7 @@ h4 {
   border-radius: 10px;
   border: none;
   padding: 10px;
-  box-shadow: 0px 0px 10px #fdeadf;
+  box-shadow: 0px 4px 10px -4px#fdeadf;
   width: 130%;
 }
 .signup {
@@ -95,12 +105,50 @@ h4 {
   font-style: inherit;
   cursor: pointer;
   border: none;
+  margin-top: 10px;
 }
+
 .login {
-  background: linear-gradient(to left, #f76b1c, #ffcc00);
-  border-radius: 15px;
-  width: 30%;
-  padding: 5px;
-  text-align: center;
   color: #1e196b;
+  padding: 5px 10px;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.login:hover {
+  color: #f76b1c;
+}
+
+.loginContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  margin-top: 15px;
+}
+.error {
+  color: red;
+  font-size: 0.8rem;
+  margin-top: 4px;
+  display: block;
+}
+
+.passwordContainer {
+  position: relative;
+}
+
+.togglePassword {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  font-size: 0.9rem;
 }
