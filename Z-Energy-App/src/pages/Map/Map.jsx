@@ -1,11 +1,18 @@
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { APIProvider, Map as GoogleMap, Marker } from '@vis.gl/react-google-maps';
 import Search from '../../components/Search/Search';
-// Import custom marker icons
-import zStationIcon from '../../assets/z-station.png';
-import selectedStationIcon from '../../assets/selected-z-station.png';
-import recentreIcon from '../../assets/recentre.png';
 import './Map.css';
+
+// Define marker icon paths - using /public folder
+const iconPaths = {
+  station: '/z-station.png',
+  selectedStation: '/selected-z-station.png',
+  recentre: '/recentre.png',
+  diesel: '/diesel.png',
+  unleaded95: '/95.png',
+  unleaded91: '/91.png',
+  currentLocation: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png'
+};
 
 /**
  * Z Fuel Station Map Component
@@ -19,6 +26,7 @@ const Map = () => {
   const [stations, setStations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [currentLocation, setCurrentLocation] = useState(null);
   
   // Reference to the map instance
   const mapRef = useRef(null);
@@ -41,15 +49,87 @@ const Map = () => {
   // Custom marker icons for Z stations
   const markerIcons = {
     default: {
-      url: zStationIcon,
+      url: iconPaths.station,
       scaledSize: { width: 40, height: 40 },
       anchor: { x: 20, y: 40 }
     },
     selected: {
-      url: selectedStationIcon,
+      url: iconPaths.selectedStation,
       scaledSize: { width: 50, height: 50 },
       anchor: { x: 25, y: 50 }
+    },
+    diesel: {
+      url: iconPaths.diesel,
+      scaledSize: { width: 40, height: 40 },
+      anchor: { x: 20, y: 40 }
+    },
+    unleaded95: {
+      url: iconPaths.unleaded95,
+      scaledSize: { width: 40, height: 40 },
+      anchor: { x: 20, y: 40 }
+    },
+    unleaded91: {
+      url: iconPaths.unleaded91,
+      scaledSize: { width: 40, height: 40 },
+      anchor: { x: 20, y: 40 }
     }
+  };
+  
+  /**
+   * Handle when a place is selected from the search component 
+   */
+  const handlePlaceSelect = useCallback((location) => {
+    // Update the map center to the selected location
+    if (mapRef.current) {
+      mapRef.current.panTo(location);
+      mapRef.current.setZoom((mapRef.current.getZoom() || 12) + 1);
+    }
+  }, []);
+
+  /**
+   * Set current location from search results
+   */
+  const setLocationFromSearch = useCallback((location, address) => {
+    setCurrentLocation(location);
+    console.log('Current location set to:', address);
+    // Show a temporary notification
+    setError(`Current location set to: ${address}`);
+    // Clear the notification after 3 seconds
+    setTimeout(() => setError(null), 3000);
+  }, []);
+
+  /**
+   * Get directions to the selected station
+   */
+  const getDirectionsToStation = useCallback(() => {
+    if (!currentLocation || !selectedStation) return;
+    
+    // Create directions URL for Google Maps
+    const origin = `${currentLocation.lat},${currentLocation.lng}`;
+    const destination = `${selectedStation.position.lat},${selectedStation.position.lng}`;
+    const directionsUrl = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}&travelmode=driving`;
+    
+    // Open in a new tab
+    window.open(directionsUrl, '_blank');
+  }, [currentLocation, selectedStation]);
+  
+  /**
+   * Get the appropriate fuel icon path based on fuel type
+   */
+  const getFuelTypeIconPath = (fuelType) => {
+    if (!fuelType) return null;
+    
+    const lowerFuelType = fuelType.toLowerCase();
+    
+    if (lowerFuelType.includes('diesel')) {
+      return iconPaths.diesel;
+    } else if (lowerFuelType.includes('95')) {
+      return iconPaths.unleaded95;
+    } else if (lowerFuelType.includes('91')) {
+      return iconPaths.unleaded91;
+    }
+    
+    return null;
   };
   
   /* ============================================================
@@ -124,17 +204,17 @@ const Map = () => {
           _id: '3',
           name: 'Z Midtown',
           address: '89 Willis Street, Wellington',
-          fuel_price: 2.61,
-          fuel_type: 'Unleaded 91',
-          position: { lat: -41.2895, lng: 174.7772 }
+          fuel_price: 2.89,
+          fuel_type: 'Unleaded 95',
+          position: { lat: -41.2888, lng: 174.7772 }
         },
         {
           _id: '2',
           name: 'Z Harbour City',
-          address: '125 Customhouse Quay, Wellington',
-          fuel_price: 2.63,
-          fuel_type: 'Unleaded 91',
-          position: { lat: -41.2825, lng: 174.7782 }
+          address: '232 Thorndon Quay, Wellington',
+          fuel_price: 2.19,
+          fuel_type: 'Diesel',
+          position: { lat: -41.2765, lng: 174.7865 }
         }
       ]);
     } finally {
@@ -203,8 +283,8 @@ const Map = () => {
           {/* Search component */}
           <div className="search-container">
             <Search 
-              stations={stations} 
-              onStationSelect={handleStationClick}
+              onPlaceSelect={handlePlaceSelect} 
+              onSetLocation={setLocationFromSearch} 
             />
           </div>
           
@@ -214,7 +294,7 @@ const Map = () => {
             onClick={handleRecenterMap}
             title="Recenter map to Wellington"
           >
-            <img src={recentreIcon} alt="Recenter" width="20" height="20" />
+            <img src={iconPaths.recentre} alt="Recenter" width="20" height="20" />
           </button>
           
           {/* Main Google Map */}
@@ -245,9 +325,21 @@ const Map = () => {
                 icon={selectedStation && selectedStation._id === station._id
                   ? markerIcons.selected
                   : markerIcons.default}
-                // icon={customMarkerIcon}
               />
             ))}
+            
+            {/* Current location marker */}
+            {currentLocation && (
+              <Marker
+                position={currentLocation}
+                title="Your Location"
+                icon={{
+                  url: iconPaths.currentLocation,
+                  scaledSize: { width: 34, height: 34 },
+                  anchor: { x: 17, y: 17 }
+                }}
+              />
+            )}
           </GoogleMap>
           
           {/* Station details panel - shows when a station is selected */}
@@ -256,11 +348,27 @@ const Map = () => {
               <h3>{selectedStation.name}</h3>
               <p>{selectedStation.address}</p>
               <div className="fuel-info">
-                <span className="fuel-type">{selectedStation.fuel_type}</span>
+                <div className="fuel-type-container">
+                  {getFuelTypeIconPath(selectedStation.fuel_type) ? (
+                    <img 
+                      src={getFuelTypeIconPath(selectedStation.fuel_type)} 
+                      alt={selectedStation.fuel_type} 
+                      className="fuel-type-icon" 
+                      title={selectedStation.fuel_type}
+                    />
+                  ) : (
+                    <span className="fuel-type">{selectedStation.fuel_type}</span>
+                  )}
+                </div>
                 <span className="fuel-price">${selectedStation.fuel_price.toFixed(2)}/L</span>
               </div>
-              <button className="directions-btn">
-                Get Directions
+              <button 
+                className="directions-btn"
+                onClick={getDirectionsToStation}
+                disabled={!currentLocation}
+                title={currentLocation ? "Get directions to this station" : "Set your location first"}
+              >
+                {currentLocation ? "Get Directions" : "Set Location First"}
               </button>
               <button 
                 className="close-btn"

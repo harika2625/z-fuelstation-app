@@ -103,35 +103,41 @@
 /* Station Details Panel */
 .station-details-panel {
   position: absolute;
-  bottom: 30px;
-  left: 30px;
+  top: 80px;
+  right: 20px;
   background-color: white;
   border-radius: 8px;
-  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
-  padding: 20px;
-  width: 300px;
+  padding: 15px;
+  width: 280px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   z-index: 5;
 }
 
 .station-details-panel h3 {
   margin-top: 0;
-  color: #f00; /* Z Energy red */
-  font-size: 18px;
+  color: #1a73e8;
 }
 
-.station-details-panel p {
-  margin: 8px 0;
-  color: #333;
-}
-
-/* Fuel Info */
 .fuel-info {
   display: flex;
   justify-content: space-between;
   margin: 15px 0;
-  padding: 8px;
-  background-color: #f8f8f8;
+  padding: 10px;
+  background-color: #f5f5f5;
   border-radius: 4px;
+}
+
+.fuel-type-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fuel-type-icon {
+  display: block;
+  width: auto;
+  height: auto;
+  max-height: 28px;
 }
 
 .fuel-type {
