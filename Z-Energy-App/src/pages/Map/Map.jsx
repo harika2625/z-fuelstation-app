@@ -22,6 +22,18 @@ const Map = () => {
   
   // Reference to the map instance
   const mapRef = useRef(null);
+  
+  // Auto-dismiss error message after 5 seconds
+  useEffect(() => {
+    if (error) {
+      const timer = setTimeout(() => {
+        setError(null);
+      }, 5000); // 5 seconds
+      
+      // Cleanup timeout on component unmount or when error changes
+      return () => clearTimeout(timer);
+    }
+  }, [error]);
 
   // Default center on Wellington, New Zealand
   const defaultCenter = useMemo(() => ({ lat: -41.2865, lng: 174.7762 }), []);
@@ -43,24 +55,27 @@ const Map = () => {
   /* ============================================================
    * Map styling to remove default POIs and map markers
    * ============================================================ */
+  // Ultra-simplified map styling to remove ALL POIs
   const mapStyles = [
     {
-      // Remove all points of interest
-      featureType: 'poi',
-      elementType: 'all',
-      stylers: [{ visibility: 'off' }]
+      featureType: "all",
+      elementType: "labels.icon",
+      stylers: [
+        { visibility: "off" }
+      ]
     },
     {
-      // Remove all business POIs
-      featureType: 'poi.business',
-      elementType: 'all',
-      stylers: [{ visibility: 'off' }]
+      featureType: "poi",
+      elementType: "all",
+      stylers: [
+        { visibility: "off" }
+      ]
     },
     {
-      // Remove transit stations
-      featureType: 'transit',
-      elementType: 'all',
-      stylers: [{ visibility: 'off' }]
+      featureType: "business",
+      stylers: [
+        { visibility: "off" }
+      ]
     }
   ];
 
@@ -175,12 +190,6 @@ const Map = () => {
         apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY} 
         libraries={['places']}
       >
-        {/* Error message display */}
-        {error && <div className="error-message">{error}</div>}
-        
-        {/* Loading indicator */}
-        {loading && <div className="loading-spinner">Loading stations...</div>}
-        
         {/* Map container */}
         <div className="map-container">
           {/* Search component */}
@@ -213,7 +222,8 @@ const Map = () => {
               fullscreenControl: false, 
               mapTypeControl: false,
               streetViewControl: false,
-              disableDefaultUI: false
+              disableDefaultUI: true,
+              clickableIcons: false
             }}
             gestureHandling={'greedy'}
           >
@@ -252,6 +262,15 @@ const Map = () => {
               </button>
             </div>
           )}
+        </div>
+
+        {/* Error and loading messages moved to bottom of page */}
+        <div className="messages-container">
+          {/* Loading indicator */}
+          {loading && <div className="loading-spinner">Loading stations...</div>}
+          
+          {/* Error message display */}
+          {error && <div className="error-message">{error}</div>}
         </div>
       </APIProvider>
     </div>

@@ -28,7 +28,7 @@
 /* Error Message */
 .error-message {
   position: absolute;
-  top: 20px;
+  bottom: 20px; /* Changed from top to bottom */
   left: 50%;
   transform: translateX(-50%);
   background-color: #ff5252;

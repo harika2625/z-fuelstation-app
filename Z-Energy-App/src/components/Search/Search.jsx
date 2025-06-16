@@ -1,155 +1,87 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
+import { useMap } from '@vis.gl/react-google-maps';
 import './Search.css';
 
-/**
- * Search component for Z Fuel stations
- * 
- * This component provides search functionality for Z Fuel stations.
- * It includes autocomplete suggestions and handles search submissions.
- * 
- * @param {Object} props
- * @param {Function} props.onStationSelect - Callback when a station is selected
- * @param {Array} props.stations - List of available stations
- */
-const Search = ({ onStationSelect, stations = [] }) => {
-  // State for search input and results
-  const [searchTerm, setSearchTerm] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
-  const [isSearching, setIsSearching] = useState(false);
-  const [showSuggestions, setShowSuggestions] = useState(false);
-  
-  // Reference to the search input and suggestions container
+const Search = () => {
+  const map = useMap();
+  const searchBoxRef = useRef(null);
   const searchInputRef = useRef(null);
-  const suggestionsRef = useRef(null);
-  
-  /**
-   * Filter stations based on search term
-   */
-  const filterStations = (term) => {
-    if (!term.trim() || !stations || stations.length === 0) {
-      return [];
-    }
-    
-    const lowerCaseTerm = term.toLowerCase();
-    
-    // Filter stations by name or address
-    return stations.filter(
-      station => 
-        station.name.toLowerCase().includes(lowerCaseTerm) || 
-        station.address.toLowerCase().includes(lowerCaseTerm)
-    );
-  };
-  
-  /**
-   * Handle input change in search box
-   */
-  const handleSearchChange = (e) => {
-    const value = e.target.value;
-    setSearchTerm(value);
-    
-    if (value.trim()) {
-      setIsSearching(true);
-      
-      // Filter stations based on search term
-      const filteredResults = filterStations(value);
-      setSearchResults(filteredResults);
-      setShowSuggestions(true);
-    } else {
-      setSearchResults([]);
-      setShowSuggestions(false);
-    }
-    
-    setIsSearching(false);
-  };
-  
-  /**
-   * Handle selection of a station from search results
-   */
-  const handleStationSelect = (station) => {
-    setSearchTerm(station.name);
-    setShowSuggestions(false);
-    
-    // Call the callback to select this station on the map
-    if (onStationSelect) {
-      onStationSelect(station);
-    }
-  };
-  
-  /**
-   * Handle form submission for search
-   */
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    
-    // If we have search results, select the first one
-    if (searchResults.length > 0) {
-      handleStationSelect(searchResults[0]);
-    }
-  };
-  
-  /**
-   * Close suggestions when clicking outside
-   */
+
   useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (
-        suggestionsRef.current &&
-        !suggestionsRef.current.contains(e.target) &&
-        !searchInputRef.current.contains(e.target)
-      ) {
-        setShowSuggestions(false);
+    if (!map || !window.google || searchBoxRef.current) return;
+
+    // Create the search box input
+    const input = document.createElement('input');
+    input.placeholder = 'Search for a location';
+    input.className = 'places-search-input';
+    searchInputRef.current = input;
+    
+    // Add event listener for Enter key press
+    input.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const query = input.value;
+        
+        // If input is not empty, trigger geocoding
+        if (query.trim()) {
+          const geocoder = new window.google.maps.Geocoder();
+          geocoder.geocode({ address: query }, (results, status) => {
+            if (status === 'OK' && results && results[0]) {
+              // Zoom and center to the geocoded location
+              const location = results[0].geometry.location;
+              map.setCenter(location);
+              map.setZoom(15);
+              
+              console.log('Geocoded address:', results[0].formatted_address);
+            } else {
+              console.error('Geocoding failed:', status);
+            }
+          });
+        }
       }
-    };
-    
-    document.addEventListener('mousedown', handleClickOutside);
-    
+    });
+
+    // Create the search box
+    const searchBox = new window.google.maps.places.SearchBox(input);
+    searchBoxRef.current = searchBox;
+
+    // Add the search box to the map
+    map.controls[window.google.maps.ControlPosition.TOP_CENTER].push(input);
+
+    // Listen for the event fired when the user selects a prediction
+    searchBox.addListener('places_changed', () => {
+      const places = searchBox.getPlaces();
+
+      if (places.length === 0) return;
+
+      // Get the first place
+      const place = places[0];
+
+      if (!place.geometry || !place.geometry.location) {
+        console.log('Returned place contains no geometry');
+        return;
+      }
+
+      // Pan to the selected location
+      map.panTo(place.geometry.location);
+      map.setZoom(15);
+    });
+
+    // Bias the SearchBox results towards current map's viewport.
+    map.addListener('bounds_changed', () => {
+      searchBox.setBounds(map.getBounds());
+    });
+
+    // Cleanup
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      if (searchInputRef.current) {
+        searchInputRef.current.remove();
+      }
+      window.google.maps.event.clearInstanceListeners(searchBox);
     };
-  }, []);
-  
-  return (
-    <div className="search-component">
-      <form onSubmit={handleSearchSubmit}>
-        <div className="search-input-container">
-          <input
-            ref={searchInputRef}
-            type="text"
-            value={searchTerm}
-            onChange={handleSearchChange}
-            placeholder="Search Z Fuel stations..."
-            className="search-input"
-          />
-          <button type="submit" className="search-button">
-            Search
-          </button>
-        </div>
-      </form>
-      
-      {/* Search suggestions dropdown */}
-      {showSuggestions && searchResults.length > 0 && (
-        <div className="search-suggestions" ref={suggestionsRef}>
-          {isSearching ? (
-            <div className="suggestion-item loading">Searching...</div>
-          ) : (
-            searchResults.map((station, index) => (
-              <div
-                key={station._id || index}
-                className="suggestion-item"
-                onClick={() => handleStationSelect(station)}
-              >
-                <div className="suggestion-name">{station.name}</div>
-                <div className="suggestion-address">{station.address}</div>
-                <div className="suggestion-fuel">
-                  {station.fuel_type} - ${station.fuel_price?.toFixed(2)}/L
-                </div>
-              </div>
-            ))
-          )}
-        </div>
-      )}
-    </div>
-  );
+  }, [map]);
+
+  return null; // The search box is added directly to the map
 };
 
 export default Search;

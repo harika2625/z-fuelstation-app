@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import Home from "./components/Home";
@@ -8,7 +8,7 @@ import PaymentDetails from "./components/PaymentDetails";
 import "./App.css";
 import PriceComparison from "./pages/PriceComparison/PriceComparison";
 //import TestMap from "./pages/Map/TempMap";
-import Map from ".pages/Map/Map.jsx";
+import Map from "./pages/Map/Map.jsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -16,6 +16,7 @@ function App() {
   return (
     <div className="App">
       <Routes>
+        <Route path="/" element={<Navigate to="/Home" />} />
         <Route path="/register" element={<Signup />} />
         <Route path="/Notification" element={<Notification />} />
         <Route path="/Notification2" element={<Notification2 />} />
