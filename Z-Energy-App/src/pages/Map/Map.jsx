@@ -121,6 +121,14 @@ const Map = () => {
           position: { lat: -41.2965, lng: 174.7762 }
         },
         {
+          _id: '3',
+          name: 'Z Midtown',
+          address: '89 Willis Street, Wellington',
+          fuel_price: 2.61,
+          fuel_type: 'Unleaded 91',
+          position: { lat: -41.2895, lng: 174.7772 }
+        },
+        {
           _id: '2',
           name: 'Z Harbour City',
           address: '125 Customhouse Quay, Wellington',

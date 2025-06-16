@@ -30,7 +30,10 @@ const Search = () => {
               // Zoom and center to the geocoded location
               const location = results[0].geometry.location;
               map.setCenter(location);
-              map.setZoom(15);
+              
+              // Increase zoom by 1 level
+              const currentZoom = map.getZoom() || 13;
+              map.setZoom(currentZoom + 1);
               
               console.log('Geocoded address:', results[0].formatted_address);
             } else {
@@ -64,7 +67,10 @@ const Search = () => {
 
       // Pan to the selected location
       map.panTo(place.geometry.location);
-      map.setZoom(15);
+      
+      // Increase zoom by 1 level
+      const currentZoom = map.getZoom() || 13;
+      map.setZoom(currentZoom + 1);
     });
 
     // Bias the SearchBox results towards current map's viewport.
