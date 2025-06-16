@@ -98,6 +98,18 @@ const Map = () => {
     setTimeout(() => setError(null), 3000);
   }, []);
 
+    /**
+   * Handles camera movement on the map
+   */
+    const handleCameraChange = useCallback((ev) => {
+      // Log the current map center position
+      console.log('Map center changed to:', ev.center);
+      
+      // Future?: Load stations based on current map bounds
+      // const bounds = mapRef.current?.getBounds();
+      // if (bounds) fetchStationsInBounds(bounds);
+    }, []);
+
   /**
    * Get directions to the selected station
    */
@@ -221,19 +233,6 @@ const Map = () => {
       setLoading(false);
     }
   };
-
-  /**
-   * Handles camera movement on the map
-   * Can be used to dynamically load stations as user moves around
-   */
-  const handleCameraChange = useCallback((ev) => {
-    // Log the current map center position
-    console.log('Map center changed to:', ev.center);
-    
-    // Future?: Load stations based on current map bounds
-    // const bounds = mapRef.current?.getBounds();
-    // if (bounds) fetchStationsInBounds(bounds);
-  }, []);
   
   /**
    * Handles clicks on station markers
@@ -306,7 +305,8 @@ const Map = () => {
             onClick={handleMapClick}
             onCameraChanged={handleCameraChange}
             options={{
-              styles: mapStyles,
+              // Can't get this to work properly
+              styles: mapStyles, 
               fullscreenControl: false, 
               mapTypeControl: false,
               streetViewControl: false,
