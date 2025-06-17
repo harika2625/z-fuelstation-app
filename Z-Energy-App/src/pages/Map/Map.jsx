@@ -146,64 +146,94 @@ const Map = () => {
   
   /* ============================================================
    * Map styling to remove default POIs and map markers
-   * ============================================================ */
-  // Ultra-simplified map styling to remove ALL POIs
+   * ============================================================  /**
+   * Comprehensive style configuration to hide all POIs (Points of Interest) on the map
+   * This creates a cleaner look that focuses on Z Fuel stations
+   */
   const mapStyles = [
     {
-      featureType: "all",
-      elementType: "labels.icon",
-      stylers: [
-        { visibility: "off" }
-      ]
-    },
-    {
+      // Hide all points of interest
       featureType: "poi",
       elementType: "all",
-      stylers: [
-        { visibility: "off" }
-      ]
+      stylers: [{ visibility: "off" }]
     },
     {
+      // Hide all business icons
+      featureType: "poi.business",
+      elementType: "all",
+      stylers: [{ visibility: "off" }]
+    },
+    {
+      // Hide transit stations and lines
+      featureType: "transit",
+      elementType: "all",
+      stylers: [{ visibility: "off" }]
+    },
+    {
+      // Hide labels for places
+      featureType: "administrative.locality",
+      elementType: "labels.icon",
+      stylers: [{ visibility: "off" }]
+    },
+    {
+      // Remove all business points
       featureType: "business",
-      stylers: [
-        { visibility: "off" }
-      ]
+      stylers: [{ visibility: "off" }]
+    },
+    {
+      // Remove labels from points of interest
+      featureType: "poi",
+      elementType: "labels",
+      stylers: [{ visibility: "off" }]
+    },
+    {
+      // Remove attraction markers
+      featureType: "poi.attraction",
+      stylers: [{ visibility: "off" }]
+    },
+    {
+      // Remove place of worship markers
+      featureType: "poi.place_of_worship",
+      stylers: [{ visibility: "off" }]
+    },
+    {
+      // Remove government building markers
+      featureType: "poi.government",
+      stylers: [{ visibility: "off" }]
+    },
+    {
+      // Remove school markers
+      featureType: "poi.school",
+      stylers: [{ visibility: "off" }]
+    },
+    {
+      // Remove medical facility markers
+      featureType: "poi.medical",
+      stylers: [{ visibility: "off" }]
+    },
+    {
+      // Remove park markers but keep the green areas
+      featureType: "poi.park",
+      elementType: "labels",
+      stylers: [{ visibility: "off" }]
+    },
+    {
+      // Remove sports complex markers
+      featureType: "poi.sports_complex",
+      stylers: [{ visibility: "off" }]
     }
   ];
 
   /**
-   * Fetches station data from the backend API
-   * This connects to the existing /stations endpoint
+   * Provides station data for the map
+   * Currently using mock data; can be replaced with API fetch when backend is ready
    */
   const fetchStations = async () => {
     try {
       setLoading(true);
-      // Using the existing endpoint from your backend
-      const response = await fetch('http://localhost:3000/stations');
       
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      
-      const data = await response.json();
-      
-      // Station model will need latitude and longitude fields
-      const stationsWithCoordinates = data.response.map(station => ({
-        ...station,
-        // Lat/Long such as these:
-        position: {
-          lat: parseFloat(station.latitude || -41.2865),
-          lng: parseFloat(station.longitude || 174.7762)
-        }
-      }));
-      
-      setStations(stationsWithCoordinates);
-      setError(null);
-    } catch (err) {
-      console.error('Failed to fetch stations:', err);
-      setError('Failed to load station data. Please try again later.');
-      // Use mock data for testing when backend is unavailable
-      setStations([
+      // Using mock data for development
+      const stationsWithCoordinates = [
         {
           _id: '1',
           name: 'Z Vivian Street',
@@ -228,7 +258,13 @@ const Map = () => {
           fuel_type: 'Diesel',
           position: { lat: -41.2765, lng: 174.7865 }
         }
-      ]);
+      ];
+      
+      setStations(stationsWithCoordinates);
+      setError(null);
+    } catch (err) {
+      console.error('Error fetching stations:', err);
+      setError('Failed to fetch stations. Using mock data instead.');
     } finally {
       setLoading(false);
     }
