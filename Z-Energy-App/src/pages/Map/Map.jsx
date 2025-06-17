@@ -292,14 +292,17 @@ const Map = () => {
   }, []);
 
   /**
-   * Recenter map to default location (Wellington)
+   * Recenter map on existing pin (current location)
+   * Does nothing if no pin exists
    */
   const handleRecenterMap = useCallback(() => {
-    if (mapRef.current) {
-      mapRef.current.panTo(defaultCenter);
-      mapRef.current.setZoom(13);
+    // Only recenter if there's an existing pin (current location)
+    if (mapRef.current && currentLocation) {
+      mapRef.current.panTo(currentLocation.position);
+      mapRef.current.setZoom(15); // Slightly closer zoom level for better visibility
     }
-  }, [defaultCenter]);
+    // Silently do nothing if no pin exists
+  }, [currentLocation]);
 
   // Fetch stations on component mount
   useEffect(() => {
