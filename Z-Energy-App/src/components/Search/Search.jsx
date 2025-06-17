@@ -57,7 +57,7 @@ const Search = ({ onPlaceSelect, onSetLocation }) => {
     };
     searchInputRef.current = input;
     
-    // Add event listener for Enter key press
+    // Add event listener for Enter key press, intuitive QoL
     input.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') {
         e.preventDefault();
